@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { getBoards } from "../../services/boardService";
+import DashboardLayout from "../../components/layout/DashboardLayout";
 
 function Dashboard() {
   const { token } = useAuth();
-
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
@@ -16,23 +16,23 @@ function Dashboard() {
       const data = await getBoards(token);
       setBoards(data.boards);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-8">
-      <h1 className="text-4xl font-bold mb-8">
+    <DashboardLayout>
+      <h1 className="text-3xl font-bold text-white mb-8">
         My Boards
       </h1>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {boards.map((board) => (
           <div
             key={board._id}
-            className="bg-slate-900 rounded-xl p-6 border border-slate-800"
+            className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-blue-500 transition"
           >
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-white">
               {board.title}
             </h2>
 
@@ -42,7 +42,7 @@ function Dashboard() {
           </div>
         ))}
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
 
