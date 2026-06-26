@@ -12,6 +12,7 @@ import {
   createTask,
   updateTask,
   deleteTask,
+  updateTaskStatus,
 } from "../services/taskService";
 
 function Board() {
@@ -54,15 +55,9 @@ function Board() {
 
   async function handleSave(updatedData) {
     try {
-      await updateTask(
-        selectedTask._id,
-        updatedData,
-        token
-      );
-
+      await updateTask(selectedTask._id, updatedData, token);
       setShowEditModal(false);
       setSelectedTask(null);
-
       loadTasks();
     } catch (error) {
       console.error(error);
@@ -71,11 +66,7 @@ function Board() {
   }
 
   async function handleDelete(taskId) {
-    const confirmDelete = window.confirm(
-      "Delete this task?"
-    );
-
-    if (!confirmDelete) return;
+    if (!window.confirm("Delete this task?")) return;
 
     try {
       await deleteTask(taskId, token);
@@ -83,6 +74,16 @@ function Board() {
     } catch (error) {
       console.error(error);
       alert("Failed to delete task");
+    }
+  }
+
+  async function handleStatusChange(taskId, status) {
+    try {
+      await updateTaskStatus(taskId, status, token);
+      loadTasks();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update task status");
     }
   }
 
@@ -101,7 +102,6 @@ function Board() {
   return (
     <DashboardLayout>
       <div className="flex justify-between items-center mb-8">
-
         <div>
           <h1 className="text-3xl font-bold text-white">
             Board
@@ -118,32 +118,32 @@ function Board() {
         >
           + Add Task
         </button>
-
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
         <Column
-          title={`Todo (${todo.length})`}
+          title="Todo"
           tasks={todo}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          onStatusChange={handleStatusChange}
         />
 
         <Column
-          title={`In Progress (${progress.length})`}
+          title="In Progress"
           tasks={progress}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          onStatusChange={handleStatusChange}
         />
 
         <Column
-          title={`Done (${done.length})`}
+          title="Done"
           tasks={done}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          onStatusChange={handleStatusChange}
         />
-
       </div>
 
       {showCreateModal && (

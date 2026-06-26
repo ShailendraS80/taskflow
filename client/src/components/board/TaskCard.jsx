@@ -4,6 +4,7 @@ function TaskCard({
   task,
   onEdit,
   onDelete,
+  onStatusChange,
 }) {
   return (
     <div className="bg-slate-800 rounded-xl p-4 border border-slate-700 hover:border-blue-500 transition">
@@ -38,6 +39,26 @@ function TaskCard({
         {task.description || "No description"}
       </p>
 
+      <div className="mt-4">
+
+        <label className="text-xs text-slate-400 block mb-1">
+          Status
+        </label>
+
+        <select
+          value={task.status}
+          onChange={(e) =>
+            onStatusChange(task._id, e.target.value)
+          }
+          className="w-full bg-slate-700 text-white rounded px-3 py-2"
+        >
+          <option value="Todo">Todo</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+
+      </div>
+
       <div className="flex justify-between items-center mt-5">
 
         <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded">
@@ -45,7 +66,9 @@ function TaskCard({
         </span>
 
         <span className="text-xs text-slate-400">
-          {task.status}
+          {task.dueDate
+            ? new Date(task.dueDate).toLocaleDateString()
+            : "No Due Date"}
         </span>
 
       </div>

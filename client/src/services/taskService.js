@@ -63,3 +63,21 @@ export const deleteTask = async (
 
   return response.data;
 };
+
+export const updateTaskStatus = async (
+  id,
+  status,
+  token
+) => {
+  const response = await api.patch(
+    `/tasks/${id}/status`,
+    { status },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
