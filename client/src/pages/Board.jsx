@@ -4,11 +4,14 @@ import { useParams } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import Column from "../components/board/Column";
 import CreateTaskModal from "../components/board/CreateTaskModal";
+import EditTaskModal from "../components/board/EditTaskModal";
 
 import { useAuth } from "../context/AuthContext";
 import {
   getTasks,
   createTask,
+  updateTask,
+  deleteTask,
 } from "../services/taskService";
 
 function Board() {
@@ -16,7 +19,9 @@ function Board() {
   const { token } = useAuth();
 
   const [tasks, setTasks] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
     loadTasks();
@@ -34,11 +39,50 @@ function Board() {
   async function handleCreateTask(taskData) {
     try {
       await createTask(taskData, token);
-      setShowModal(false);
+      setShowCreateModal(false);
       loadTasks();
     } catch (error) {
       console.error(error);
       alert("Failed to create task");
+    }
+  }
+
+  function handleEdit(task) {
+    setSelectedTask(task);
+    setShowEditModal(true);
+  }
+
+  async function handleSave(updatedData) {
+    try {
+      await updateTask(
+        selectedTask._id,
+        updatedData,
+        token
+      );
+
+      setShowEditModal(false);
+      setSelectedTask(null);
+
+      loadTasks();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to update task");
+    }
+  }
+
+  async function handleDelete(taskId) {
+    const confirmDelete = window.confirm(
+      "Delete this task?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteTask(taskId, token);
+      loadTasks();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete task");
     }
   }
 
@@ -56,7 +100,8 @@ function Board() {
 
   return (
     <DashboardLayout>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex justify-between items-center mb-8">
+
         <div>
           <h1 className="text-3xl font-bold text-white">
             Board
@@ -68,35 +113,55 @@ function Board() {
         </div>
 
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowCreateModal(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
         >
           + Add Task
         </button>
+
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
         <Column
           title={`Todo (${todo.length})`}
           tasks={todo}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
         <Column
           title={`In Progress (${progress.length})`}
           tasks={progress}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
 
         <Column
           title={`Done (${done.length})`}
           tasks={done}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
         />
+
       </div>
 
-      {showModal && (
+      {showCreateModal && (
         <CreateTaskModal
           boardId={id}
-          onClose={() => setShowModal(false)}
+          onClose={() => setShowCreateModal(false)}
           onCreate={handleCreateTask}
+        />
+      )}
+
+      {showEditModal && selectedTask && (
+        <EditTaskModal
+          task={selectedTask}
+          onClose={() => {
+            setShowEditModal(false);
+            setSelectedTask(null);
+          }}
+          onSave={handleSave}
         />
       )}
     </DashboardLayout>

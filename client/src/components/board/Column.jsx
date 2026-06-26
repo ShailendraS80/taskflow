@@ -1,6 +1,11 @@
 import TaskCard from "./TaskCard";
 
-function Column({ title, tasks }) {
+function Column({
+  title,
+  tasks,
+  onEdit,
+  onDelete,
+}) {
   return (
     <div className="bg-slate-900 rounded-xl p-4 min-h-[600px]">
 
@@ -9,12 +14,16 @@ function Column({ title, tasks }) {
       </h2>
 
       <div className="space-y-4">
+
         {tasks.map((task) => (
           <TaskCard
             key={task._id}
             task={task}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         ))}
+
       </div>
 
     </div>
