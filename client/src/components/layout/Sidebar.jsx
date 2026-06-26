@@ -1,12 +1,32 @@
-import { LayoutDashboard, FolderKanban, Settings, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Settings,
+  LogOut,
+} from "lucide-react";
+
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 function Sidebar() {
   const { logout } = useAuth();
+  const { theme } = useTheme();
 
   return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 min-h-screen p-6">
-      <h1 className="text-3xl font-bold text-white mb-10">
+    <aside
+      className={`w-64 min-h-screen p-6 border-r transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-slate-900 border-slate-800"
+          : "bg-white border-slate-200"
+      }`}
+    >
+      <h1
+        className={`text-3xl font-bold mb-10 ${
+          theme === "dark"
+            ? "text-white"
+            : "text-slate-900"
+        }`}
+      >
         TaskFlow
       </h1>
 
@@ -16,12 +36,24 @@ function Sidebar() {
           Dashboard
         </button>
 
-        <button className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+        <button
+          className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
+            theme === "dark"
+              ? "text-slate-300 hover:bg-slate-800"
+              : "text-slate-700 hover:bg-slate-100"
+          }`}
+        >
           <FolderKanban size={20} />
           Boards
         </button>
 
-        <button className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800">
+        <button
+          className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
+            theme === "dark"
+              ? "text-slate-300 hover:bg-slate-800"
+              : "text-slate-700 hover:bg-slate-100"
+          }`}
+        >
           <Settings size={20} />
           Settings
         </button>
@@ -29,7 +61,7 @@ function Sidebar() {
 
       <button
         onClick={logout}
-        className="mt-12 flex items-center gap-3 text-red-400 hover:text-red-300"
+        className="mt-12 flex items-center gap-3 text-red-500 hover:text-red-600 transition"
       >
         <LogOut size={20} />
         Logout

@@ -1,9 +1,33 @@
-function StatCard({ title, value }) {
-  return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-      <h3 className="text-slate-400 text-sm">{title}</h3>
+import { useTheme } from "../../context/ThemeContext";
 
-      <p className="text-3xl font-bold text-white mt-2">
+function StatCard({ title, value }) {
+  const { theme } = useTheme();
+
+  return (
+    <div
+      className={`rounded-xl p-6 border transition-colors duration-300 ${
+        theme === "dark"
+          ? "bg-slate-900 border-slate-800"
+          : "bg-white border-slate-200 shadow-sm"
+      }`}
+    >
+      <h3
+        className={`text-sm ${
+          theme === "dark"
+            ? "text-slate-400"
+            : "text-slate-600"
+        }`}
+      >
+        {title}
+      </h3>
+
+      <p
+        className={`text-3xl font-bold mt-2 ${
+          theme === "dark"
+            ? "text-white"
+            : "text-slate-900"
+        }`}
+      >
         {value}
       </p>
     </div>
