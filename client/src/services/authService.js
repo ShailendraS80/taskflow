@@ -6,16 +6,11 @@ export const register = async (userData) => {
 };
 
 export const login = async (userData) => {
-  const response = await api.post("/auth/login", userData);
-  return response.data;
-};
+  console.log("Sending:", userData);
 
-export const getCurrentUser = async (token) => {
-  const response = await api.get("/auth/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await api.post("/auth/login", userData);
+
+  console.log("Response:", response);
 
   return response.data;
 };
