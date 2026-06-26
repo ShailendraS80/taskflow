@@ -24,9 +24,8 @@ function EditBoardModal({
 
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-
       <div
-        className={`w-full max-w-md rounded-xl p-8 transition-colors ${
+        className={`w-full max-w-md rounded-xl p-8 ${
           theme === "dark"
             ? "bg-slate-900"
             : "bg-white shadow-xl"
@@ -43,13 +42,12 @@ function EditBoardModal({
         </h2>
 
         <form onSubmit={handleSubmit}>
-
           <input
             type="text"
             placeholder="Board Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className={`w-full mb-4 rounded-lg p-3 border ${
+            className={`w-full mb-4 p-3 rounded-lg border ${
               theme === "dark"
                 ? "bg-slate-800 border-slate-700 text-white"
                 : "bg-slate-50 border-slate-300 text-slate-900"
@@ -63,22 +61,21 @@ function EditBoardModal({
             onChange={(e) =>
               setDescription(e.target.value)
             }
-            className={`w-full mb-6 rounded-lg p-3 border ${
+            className={`w-full mb-6 p-3 rounded-lg border ${
               theme === "dark"
                 ? "bg-slate-800 border-slate-700 text-white"
                 : "bg-slate-50 border-slate-300 text-slate-900"
             }`}
           />
 
-          <div className="flex justify-end gap-4">
-
+          <div className="flex justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
               className={`px-5 py-2 rounded-lg ${
                 theme === "dark"
-                  ? "bg-slate-700 text-white hover:bg-slate-600"
-                  : "bg-slate-200 text-slate-900 hover:bg-slate-300"
+                  ? "bg-slate-700 text-white"
+                  : "bg-slate-200 text-slate-900"
               }`}
             >
               Cancel
@@ -90,13 +87,9 @@ function EditBoardModal({
             >
               Save Changes
             </button>
-
           </div>
-
         </form>
-
       </div>
-
     </div>
   );
 }

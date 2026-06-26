@@ -1,224 +1,150 @@
-# 🚀 TaskFlow – AI Powered Task Management System
+# TaskFlow – AI Powered Task Management System
 
-## 📌 Overview
+## 🚀 Overview
 
-TaskFlow is a full-stack task management application that helps users organize their work using boards and tasks. The application supports secure user authentication, task management, board organization, search and filtering, and AI-assisted task generation. It is built using the MERN stack and deployed with Render and Vercel.
+TaskFlow is a full-stack AI-powered task management application that helps users organize their work using boards and tasks. Users can create multiple boards, manage tasks efficiently, track progress, and use AI assistance to generate task ideas.
 
----
-
-## 🌐 Live Demo
-
-**Frontend:** https://taskflow-dusky-two.vercel.app/
-
-**Backend API:** https://taskflow-backend-jte3.onrender.com/
+The application is built using the MERN stack and features secure JWT authentication, responsive design, dark/light mode, and AI integration using Google's Gemini API.
 
 ---
 
-# ✨ Features
+## ✨ Features
 
-### 🔐 Authentication
+### Authentication
 
 * User Registration
 * User Login
 * JWT Authentication
 * Protected Routes
-* Persistent Login using Local Storage
+* Secure Password Hashing
 
-### 📋 Board Management
+### Board Management
 
 * Create Boards
-* View Boards
-* Open Individual Boards
+* Edit Boards
+* Delete Boards
+* Personal Boards for Each User
 
-### ✅ Task Management
+### Task Management
 
 * Create Tasks
 * Edit Tasks
 * Delete Tasks
-* Update Task Status
-* Priority Levels
-* Due Date Support
+* Move Tasks Between Status Columns
+* Task Priorities
+* Due Dates
+* Overdue Indicators
 
-### 🔍 Search & Filter
+### Dashboard
 
-* Search Tasks by Title
-* Search Tasks by Description
-* Filter Tasks by Priority
+* Board Statistics
+* Total Tasks
+* Completed Tasks
+* Pending Tasks
+* Responsive Dashboard
 
-### 🤖 AI Integration
+### Search & Filtering
 
-* AI-assisted Task Generation using Google Gemini API
-* Generate multiple actionable tasks from a project description
-* Handles API failures gracefully
+* Search Tasks
+* Filter by Priority
+* Filter by Status
 
-### 🎨 User Experience
+### AI Integration
 
-* Responsive UI
-* Toast Notifications
-* Clean Dashboard Layout
-* Modern Tailwind CSS Design
+* Gemini AI Task Generator
+* Prompt-Based Task Suggestions
+
+### User Experience
+
+* Dark Mode
+* Light Mode
+* Loading States
+* Error Handling
+* Empty States
+* Custom 404 Page
+* Responsive Design
 
 ---
 
-# 🛠 Tech Stack
+## 🛠 Tech Stack
 
-## Frontend
+### Frontend
 
 * React.js
-* React Router DOM
-* Axios
+* React Router
 * Tailwind CSS
-* React Hot Toast
+* Axios
+* Context API
 * Lucide React
-
-## Backend
-
-* Node.js
-* Express.js
-* MongoDB Atlas
-* Mongoose
-* JWT Authentication
-* bcryptjs
-* CORS
-* Helmet
-
-## Deployment
-
-* Vercel (Frontend)
-* Render (Backend)
-* MongoDB Atlas (Database)
-
----
-
-# 📂 Project Structure
-
-```
-taskflow
-│
-├── client
-│   ├── src
-│   │   ├── api
-│   │   ├── components
-│   │   ├── context
-│   │   ├── pages
-│   │   ├── routes
-│   │   ├── services
-│   │   └── ...
-│
-├── server
-│   ├── config
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   └── ...
-│
-└── README.md
-```
-
----
-
-# 🧩 System Architecture
-
-```
-React Frontend
-      │
-      │ Axios Requests
-      ▼
-Express REST API
-      │
-JWT Authentication
-      │
-Controllers
-      │
-Mongoose
-      │
-MongoDB Atlas
-```
-
----
-
-# 🔐 Authentication Flow
-
-1. User Registers
-2. Password is encrypted using bcrypt
-3. JWT Token is generated
-4. Token is stored in Local Storage
-5. Protected Routes validate the token
-6. User gains access to Dashboard
-
----
-
-# 📡 REST API Endpoints
-
-## Authentication
-
-| Method | Endpoint           |
-| ------ | ------------------ |
-| POST   | /api/auth/register |
-| POST   | /api/auth/login    |
-| GET    | /api/auth/me       |
-
----
-
-## Boards
-
-| Method | Endpoint        |
-| ------ | --------------- |
-| GET    | /api/boards     |
-| POST   | /api/boards     |
-| PUT    | /api/boards/:id |
-| DELETE | /api/boards/:id |
-
----
-
-## Tasks
-
-| Method | Endpoint              |
-| ------ | --------------------- |
-| GET    | /api/tasks            |
-| POST   | /api/tasks            |
-| PUT    | /api/tasks/:id        |
-| DELETE | /api/tasks/:id        |
-| PATCH  | /api/tasks/:id/status |
-
----
-
-# ⚙️ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/ShailendraS80/taskflow.git
-```
-
-## Install Dependencies
 
 ### Backend
 
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* bcryptjs
+
+### AI
+
+* Google Gemini API
+
+---
+
+## 📂 Project Structure
+
+client/
+
+* src/
+
+  * components/
+  * context/
+  * pages/
+  * services/
+  * api/
+
+server/
+
+* controllers/
+* models/
+* routes/
+* middleware/
+* config/
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
 ```bash
-cd server
-npm install
+git clone <repository-url>
 ```
 
-### Frontend
+### Install Dependencies
+
+Frontend
 
 ```bash
 cd client
 npm install
 ```
 
----
+Backend
 
-# ▶️ Run Locally
+```bash
+cd server
+npm install
+```
 
-## Backend
+### Run Backend
 
 ```bash
 npm run dev
 ```
 
-## Frontend
+### Run Frontend
 
 ```bash
 npm run dev
@@ -226,67 +152,82 @@ npm run dev
 
 ---
 
-# 🔑 Environment Variables
+## 🔐 Environment Variables
 
-## Server (.env)
+Backend (.env)
 
-```
-PORT=5000
-
-MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret_key
+```env
+PORT=
+MONGO_URI=
+JWT_SECRET=
 ```
 
-## Client (.env)
+Frontend (.env)
 
-```
-VITE_API_URL=http://localhost:5000/api
-
-VITE_GEMINI_API_KEY=your_gemini_api_key
+```env
+VITE_API_URL=
+VITE_GEMINI_API_KEY=
 ```
 
 ---
 
-# 📷 Screenshots
+## 🌐 API Endpoints
 
-Add screenshots of the following pages:
+### Authentication
 
-* Login Page
-* Register Page
-* Dashboard
-* Board View
-* Create Task Modal
-* AI Task Generator
-* Search & Filter
-* Responsive Mobile View
+* POST /api/auth/register
+* POST /api/auth/login
 
----
+### Boards
 
-# 🚀 Future Enhancements
+* GET /api/boards
+* POST /api/boards
+* PUT /api/boards/:id
+* DELETE /api/boards/:id
 
-* Drag & Drop Tasks
-* Team Collaboration
-* Role-Based Access
-* Email Notifications
-* Calendar View
-* File Attachments
-* Dark / Light Theme
-* Activity Logs
-* Real-time Updates using Socket.io
+### Tasks
+
+* GET /api/tasks
+* POST /api/tasks
+* PUT /api/tasks/:id
+* PATCH /api/tasks/:id/status
+* DELETE /api/tasks/:id
 
 ---
 
-# 👨‍💻 Author
+## 🤖 AI Integration
 
-**Shailendra Sharma**
+TaskFlow integrates Google's Gemini API to generate task ideas based on user prompts, helping users quickly break down projects into actionable tasks.
+
+---
+
+## 📸 Screenshots
+
+(Add screenshots here after capturing them.)
+
+---
+
+## 🚀 Deployment
+
+Frontend: (Add Vercel URL)
+
+Backend: (Add Render URL)
+
+---
+
+## 🔮 Future Improvements
+
+* Drag-and-drop task movement
+* Team collaboration
+* Email notifications
+* Calendar integration
+* Activity logs
+* Real-time updates with WebSockets
+
+---
+
+## 👨‍💻 Author
+
+Shailendra Sharma
 
 GitHub: https://github.com/ShailendraS80
-
-LinkedIn: https://www.linkedin.com/in/shailendra2726/
-
----
-
-# 📄 License
-
-This project is created for educational and portfolio purposes.

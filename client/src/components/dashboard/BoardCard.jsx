@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { Pencil, Trash2 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
-function BoardCard({ board }) {
+function BoardCard({
+  board,
+  onEdit,
+  onDelete,
+}) {
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -14,25 +19,55 @@ function BoardCard({ board }) {
           : "bg-white border-slate-200 shadow-sm hover:shadow-md"
       }`}
     >
-      <h2
-        className={`text-xl font-semibold ${
-          theme === "dark"
-            ? "text-white"
-            : "text-slate-900"
-        }`}
-      >
-        {board.title}
-      </h2>
+      <div className="flex justify-between items-start">
 
-      <p
-        className={`mt-2 ${
-          theme === "dark"
-            ? "text-slate-400"
-            : "text-slate-600"
-        }`}
-      >
-        {board.description || "No description"}
-      </p>
+        <div className="flex-1">
+          <h2
+            className={`text-xl font-semibold ${
+              theme === "dark"
+                ? "text-white"
+                : "text-slate-900"
+            }`}
+          >
+            {board.title}
+          </h2>
+
+          <p
+            className={`mt-2 ${
+              theme === "dark"
+                ? "text-slate-400"
+                : "text-slate-600"
+            }`}
+          >
+            {board.description || "No description"}
+          </p>
+        </div>
+
+        <div className="flex gap-2">
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(board);
+            }}
+            className="text-yellow-500 hover:text-yellow-600"
+          >
+            <Pencil size={18} />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(board._id);
+            }}
+            className="text-red-500 hover:text-red-600"
+          >
+            <Trash2 size={18} />
+          </button>
+
+        </div>
+
+      </div>
     </div>
   );
 }

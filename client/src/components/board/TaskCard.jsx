@@ -8,6 +8,26 @@ function TaskCard({
   onStatusChange,
 }) {
   const { theme } = useTheme();
+  const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const dueDate = task.dueDate
+  ? new Date(task.dueDate)
+  : null;
+
+if (dueDate) {
+  dueDate.setHours(0, 0, 0, 0);
+}
+
+const isOverdue =
+  dueDate &&
+  dueDate < today &&
+  task.status !== "Done";
+
+const isDueToday =
+  dueDate &&
+  dueDate.getTime() === today.getTime() &&
+  task.status !== "Done";
 
   return (
     <div
@@ -84,22 +104,34 @@ function TaskCard({
       </div>
 
       <div className="flex justify-between items-center mt-5">
-        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded">
-          {task.priority}
-        </span>
 
-        <span
-          className={`text-xs ${
-            theme === "dark"
-              ? "text-slate-400"
-              : "text-slate-600"
-          }`}
-        >
-          {task.dueDate
-            ? new Date(task.dueDate).toLocaleDateString()
-            : "No Due Date"}
-        </span>
-      </div>
+  <div className="flex gap-2 flex-wrap">
+
+    <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded">
+      {task.priority}
+    </span>
+
+    {isOverdue && (
+      <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">
+        🔴 Overdue
+      </span>
+    )}
+
+    {isDueToday && (
+      <span className="bg-yellow-500 text-white text-xs px-2 py-1 rounded">
+        🟡 Due Today
+      </span>
+    )}
+
+  </div>
+
+  <span className="text-xs text-slate-400">
+    {task.dueDate
+      ? new Date(task.dueDate).toLocaleDateString()
+      : "No Due Date"}
+  </span>
+
+</div>
     </div>
   );
 }
