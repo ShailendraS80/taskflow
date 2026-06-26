@@ -58,14 +58,21 @@ export const createTask = async (req, res) => {
     });
   }
 };
-// @desc Get all tasks
+// @desc Get all tasks (optionally filtered by board)
 // @route GET /api/tasks
 // @access Private
 export const getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({
+    const filter = {
       owner: req.user._id,
-    })
+    };
+
+    // If boardId is provided, return only that board's tasks
+    if (req.query.boardId) {
+      filter.board = req.query.boardId;
+    }
+
+    const tasks = await Task.find(filter)
       .populate("board", "title")
       .sort({ createdAt: -1 });
 
