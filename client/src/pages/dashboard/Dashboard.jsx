@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { getBoards } from "../../services/boardService";
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import StatCard from "../../components/dashboard/StatCard";
+import BoardCard from "../../components/dashboard/BoardCard";
+import CreateBoardModal from "../../components/dashboard/CreateBoardModal";
+
+import { useAuth } from "../../context/AuthContext";
+import {
+  getBoards,
+  createBoard,
+} from "../../services/boardService";
 
 function Dashboard() {
   const { token } = useAuth();
+
   const [boards, setBoards] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     loadBoards();
@@ -20,28 +29,53 @@ function Dashboard() {
     }
   }
 
+  async function handleCreate(boardData) {
+    try {
+      await createBoard(boardData, token);
+      setShowModal(false);
+      loadBoards();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <DashboardLayout>
-      <h1 className="text-3xl font-bold text-white mb-8">
-        My Boards
-      </h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-white">
+          My Boards
+        </h1>
+
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+        >
+          + New Board
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <StatCard title="Boards" value={boards.length} />
+        <StatCard title="Tasks" value="0" />
+        <StatCard title="Completed" value="0" />
+        <StatCard title="Pending" value="0" />
+      </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {boards.map((board) => (
-          <div
+          <BoardCard
             key={board._id}
-            className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-blue-500 transition"
-          >
-            <h2 className="text-xl font-semibold text-white">
-              {board.title}
-            </h2>
-
-            <p className="text-slate-400 mt-2">
-              {board.description}
-            </p>
-          </div>
+            board={board}
+          />
         ))}
       </div>
+
+      {showModal && (
+        <CreateBoardModal
+          onClose={() => setShowModal(false)}
+          onSubmit={handleCreate}
+        />
+      )}
     </DashboardLayout>
   );
 }
