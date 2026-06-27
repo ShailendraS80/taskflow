@@ -25,7 +25,16 @@ Rules:
 
     return result.response.text();
   } catch (error) {
-    console.error("Gemini Error:", error);
-    throw error;
+  console.error("Gemini Error:", error);
+
+  if (error.response) {
+    console.error("Response:", error.response);
   }
+
+  if (error.message) {
+    console.error("Message:", error.message);
+  }
+
+  throw error;
+}
 }

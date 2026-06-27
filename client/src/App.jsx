@@ -4,6 +4,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Board from "./pages/Board";
+import Boards from "./pages/Boards";
 import NotFound from "./pages/NotFound";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -12,11 +13,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Dashboard */}
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
@@ -26,7 +28,15 @@ function App() {
           }
         />
 
-        {/* Board */}
+        <Route
+          path="/boards"
+          element={
+            <ProtectedRoute>
+              <Boards />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/board/:id"
           element={
@@ -35,9 +45,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/* Default Route */}
-        <Route path="/" element={<Login />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

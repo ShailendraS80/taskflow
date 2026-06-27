@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   FolderKanban,
@@ -31,23 +32,41 @@ function Sidebar() {
       </h1>
 
       <nav className="space-y-2">
-        <button className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-blue-600 text-white">
+
+        <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            `flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : theme === "dark"
+                ? "text-slate-300 hover:bg-slate-800"
+                : "text-slate-700 hover:bg-slate-100"
+            }`
+          }
+        >
           <LayoutDashboard size={20} />
           Dashboard
-        </button>
+        </NavLink>
 
-        <button
-          className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
-            theme === "dark"
-              ? "text-slate-300 hover:bg-slate-800"
-              : "text-slate-700 hover:bg-slate-100"
-          }`}
+        <NavLink
+          to="/boards"
+          className={({ isActive }) =>
+            `flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : theme === "dark"
+                ? "text-slate-300 hover:bg-slate-800"
+                : "text-slate-700 hover:bg-slate-100"
+            }`
+          }
         >
           <FolderKanban size={20} />
           Boards
-        </button>
+        </NavLink>
 
         <button
+          onClick={() => alert("Settings page coming soon!")}
           className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg transition ${
             theme === "dark"
               ? "text-slate-300 hover:bg-slate-800"
@@ -57,6 +76,7 @@ function Sidebar() {
           <Settings size={20} />
           Settings
         </button>
+
       </nav>
 
       <button

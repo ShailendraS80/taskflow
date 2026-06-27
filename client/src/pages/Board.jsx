@@ -9,6 +9,8 @@ import EditTaskModal from "../components/board/EditTaskModal";
 import AIModal from "../components/board/AIModal";
 
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+
 import {
   getTasks,
   createTask,
@@ -20,6 +22,7 @@ import {
 function Board() {
   const { id } = useParams();
   const { token } = useAuth();
+  const { theme } = useTheme();
 
   const [tasks, setTasks] = useState([]);
 
@@ -132,11 +135,23 @@ function Board() {
     <DashboardLayout>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-white">
+          <h1
+            className={`text-3xl font-bold ${
+              theme === "dark"
+                ? "text-white"
+                : "text-slate-900"
+            }`}
+          >
             Board
           </h1>
 
-          <p className="text-slate-400">
+          <p
+            className={
+              theme === "dark"
+                ? "text-slate-400"
+                : "text-slate-600"
+            }
+          >
             Total Tasks: {filteredTasks.length}
           </p>
         </div>
@@ -164,13 +179,21 @@ function Board() {
           placeholder="🔍 Search tasks..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-slate-800 text-white rounded-lg px-4 py-3"
+          className={`rounded-lg px-4 py-3 border transition ${
+            theme === "dark"
+              ? "bg-slate-800 text-white border-slate-700"
+              : "bg-white text-slate-900 border-slate-300"
+          }`}
         />
 
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="bg-slate-800 text-white rounded-lg px-4 py-3"
+          className={`rounded-lg px-4 py-3 border transition ${
+            theme === "dark"
+              ? "bg-slate-800 text-white border-slate-700"
+              : "bg-white text-slate-900 border-slate-300"
+          }`}
         >
           <option>All</option>
           <option>Low</option>
